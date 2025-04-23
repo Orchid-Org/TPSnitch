@@ -44,8 +44,8 @@ The log file is a JSON object where each key is an ISO timestamp, and each value
 - You can call `TPSnitch.getTPS(server)` and `TPSnitch.getMSPT(server)` to retrieve live stats programmatically (server object is `MinecraftServer`)
 
 ## License
-MIT or as specified by your project
+MIT
 
 ---
 
-For questions or support, join our [Discord](https://discord.myceliummod.network).
+For questions or support, send a issue at (Issues)[https://github.com/MyceliumMods/TPSnitch/issues].

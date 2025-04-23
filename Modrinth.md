@@ -41,4 +41,4 @@ MIT or as specified by your project
 
 ---
 
-For questions or support, join our [Discord](https://discord.myceliummod.network).
+For questions or support, send a issue at (Issues)[https://github.com/MyceliumMods/TPSnitch/issues].
