@@ -6,8 +6,8 @@ import com.dashtiss.tpsnitch.platform.services.IPlatformHelper;
 import java.util.ServiceLoader;
 
 /**
- * Utility class for loading platform-specific services using Java's ServiceLoader.
- * Provides access to platform helpers for cross-loader compatibility.
+ * Provides access to platform-specific services for TPSnitch.
+ * Uses Java's ServiceLoader to load implementations.
  */
 public class Services {
 

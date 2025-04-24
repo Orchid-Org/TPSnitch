@@ -13,43 +13,62 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.Map;
 import com.google.gson.JsonObject;
 
+/**
+ * Forge entrypoint for TPSnitch mod.
+ */
 @Mod(Constants.MOD_ID)
 public class TPSnitch {
-    private static TPSnitchConfig config = null;
+    private static TpsnitchConfig config = TpsnitchConfig.get();
     private static AtomicInteger playerCount = new AtomicInteger(0);
     private static long lastLogTime = 0;
     private static Map<String, JsonObject> logs = new ConcurrentHashMap<>();
 
+    /**
+     * Default constructor for TPSnitch Forge entrypoint.
+     */
     public TPSnitch() {
         CommonClass.init();
+        // Removed config registration for Forge, handled by NightConfig
+        // MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(this);
-        config = TPSnitchConfig.COMMON;
     }
 
+    /**
+     * Called when the server has started.
+     */
     @SubscribeEvent
     public void onServerStarted(ServerStartedEvent event) {
         playerCount.set(0);
-        if (TPSnitchConfig.isDebug()) Constants.LOG.info("[TPSnitch] Server started, player count reset.");
+        if (config.debug) Constants.LOG.info("[TPSnitch] Server started, player count reset.");
     }
 
+    /**
+     * Called when a player joins the server.
+     */
     @SubscribeEvent
     public void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent event) {
         playerCount.incrementAndGet();
-        if (TPSnitchConfig.isDebug()) Constants.LOG.info("[TPSnitch] Player joined, player count: " + playerCount.get());
+        if (config.debug) Constants.LOG.info("[TPSnitch] Player joined, player count: " + playerCount.get());
     }
 
+    /**
+     * Called when a player leaves the server.
+     */
     @SubscribeEvent
     public void onPlayerLeave(PlayerEvent.PlayerLoggedOutEvent event) {
         playerCount.decrementAndGet();
-        if (TPSnitchConfig.isDebug()) Constants.LOG.info("[TPSnitch] Player left, player count: " + playerCount.get());
+        if (config.debug) Constants.LOG.info("[TPSnitch] Player left, player count: " + playerCount.get());
     }
 
+    /**
+     * Called every server tick.
+     */
     @SubscribeEvent
     public void onServerTick(TickEvent.ServerTickEvent event) {
         if (event.phase != TickEvent.Phase.END) return;
         MinecraftServer server = event.getServer();
         long now = System.currentTimeMillis();
-        if (now - lastLogTime >= TPSnitchConfig.getLogIntervalSeconds() * 1000L) {
+        if (now - lastLogTime >= config.logIntervalSeconds * 1000L) {
             double tps = getTPS(server);
             double mspt = getMSPT(server);
             int players = playerCount.get();
@@ -64,8 +83,8 @@ public class TPSnitch {
             for (Map.Entry<String, JsonObject> entry : logs.entrySet()) {
                 fileObj.add(entry.getKey(), entry.getValue());
             }
-            boolean saved = new CommonClass().saveJson(fileObj.toString(), TPSnitchConfig.getLogFileName());
-            if (TPSnitchConfig.isDebug()) Constants.LOG.info("[TPSnitch] Log saved: " + saved);
+            boolean saved = new CommonClass().saveJson(fileObj.toString(), config.logFileName, config.debug);
+            if (config.debug) Constants.LOG.info("[TPSnitch] Log saved: " + saved);
             lastLogTime = now;
         }
     }

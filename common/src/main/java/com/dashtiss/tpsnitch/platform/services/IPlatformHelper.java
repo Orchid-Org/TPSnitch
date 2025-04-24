@@ -1,5 +1,8 @@
 package com.dashtiss.tpsnitch.platform.services;
 
+/**
+ * Interface for platform-specific helpers used by TPSnitch.
+ */
 public interface IPlatformHelper {
 
     /**

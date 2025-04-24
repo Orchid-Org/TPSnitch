@@ -12,7 +12,7 @@ import java.util.Map;
 import com.google.gson.JsonObject;
 
 public class TPSnitch implements ModInitializer {
-    private static TPSnitchConfig config = new TPSnitchConfig();
+    private static TpsnitchConfig config = TpsnitchConfig.get();
     private static AtomicInteger playerCount = new AtomicInteger(0);
     private static long lastLogTime = 0;
     private static Map<String, JsonObject> logs = new ConcurrentHashMap<>();
@@ -58,7 +58,7 @@ public class TPSnitch implements ModInitializer {
                 for (Map.Entry<String, JsonObject> entry : logs.entrySet()) {
                     fileObj.add(entry.getKey(), entry.getValue());
                 }
-                boolean saved = new CommonClass().saveJson(fileObj.toString(), config.logFileName);
+                boolean saved = new CommonClass().saveJson(fileObj.toString(), config.logFileName, config.debug);
                 if (config.debug) Constants.LOG.info("[TPSnitch] Log saved: " + saved);
                 lastLogTime = now;
             }

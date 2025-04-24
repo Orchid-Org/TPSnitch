@@ -4,7 +4,12 @@ import com.dashtiss.tpsnitch.platform.services.IPlatformHelper;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.FMLLoader;
 
+/**
+ * Forge-specific implementation of IPlatformHelper for TPSnitch.
+ */
 public class ForgePlatformHelper implements IPlatformHelper {
+    /** Default constructor. */
+    public ForgePlatformHelper() {}
 
     @Override
     public String getPlatformName() {
