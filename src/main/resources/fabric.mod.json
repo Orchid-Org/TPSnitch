@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "tpsnitch",
+  "version": "${version}",
+  "name": "TPSnitch",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "All-Rights-Reserved",
+  "icon": "assets/tpsnitch/icon.png",
+  "environment": "server",
+  "entrypoints": {
+    "main": [
+      "io.github.orchidorg.tpsnitch.Tpsnitch"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric-api": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
